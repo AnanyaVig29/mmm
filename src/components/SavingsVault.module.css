@@ -1,0 +1,257 @@
+.container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-vault);
+  position: relative;
+  transition: border-color var(--dur-base);
+}
+
+.container:hover { border-color: var(--border-primary); }
+
+/* Rotating vault wheel decoration */
+.vaultWheel {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wheelLock { color: var(--primary); }
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding: clamp(20px, 2.5vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconCircle {
+  width: 42px; height: 42px;
+  border-radius: var(--radius-md);
+  background: var(--primary-glow);
+  border: 1px solid var(--border-primary);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.titleInfo { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.title    { font-size: 1rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; }
+.subtitle { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.statusBadge {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--success);
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+/* Balance */
+.balanceSection { display: flex; flex-direction: column; gap: 4px; }
+.label { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.amountWrap  { display: flex; align-items: baseline; gap: 4px; }
+.currency    { font-size: 1.4rem; font-weight: 900; color: var(--primary); }
+.amount      {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 950;
+  color: var(--text-primary);
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+/* Progress */
+.progressArea { display: flex; flex-direction: column; gap: 8px; }
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.milestone { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+.percent   { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--primary); }
+
+.barOuter {
+  height: 6px;
+  background: var(--bg-surface);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.barInner {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: 3px;
+}
+
+.modeToggle {
+  display: flex;
+  gap: 6px;
+  background: var(--bg-surface);
+  padding: 5px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+}
+
+.modeBtn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 9px 12px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--dur-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.modeBtn:hover:not(.activeModeDeposit):not(.activeModeWithdraw) {
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+/* Active — Deposit (green primary) */
+.activeModeDeposit {
+  background: var(--primary-glow);
+  color: var(--primary);
+  box-shadow: 0 2px 10px var(--primary-glow);
+  border: 1px solid var(--border-primary);
+}
+
+/* Active — Withdraw (danger/rose) */
+.activeModeWithdraw {
+  background: rgba(255, 77, 77, 0.1);
+  color: var(--danger);
+  box-shadow: 0 2px 10px rgba(255,77,77,0.12);
+  border: 1px solid rgba(255,77,77,0.25);
+}
+
+/* Deposit form */
+.depositForm { width: 100%; }
+
+.inputBox {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-surface);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.inputBox:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+
+.inputWithdraw:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.2); }
+
+.input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.input::placeholder { color: var(--text-muted); }
+
+.sendBtn {
+  width: 52px;
+  background: var(--gradient-primary);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: #000;
+  transition: all var(--dur-fast);
+  flex-shrink: 0;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+}
+
+.btnWithdraw {
+  background: linear-gradient(135deg, var(--danger) 0%, #ff7070 100%);
+  color: #fff;
+}
+
+.sendBtn:hover         { opacity: 0.85; transform: scale(1.04); }
+.sendBtn:disabled      { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+.spin { animation: spin 0.8s linear infinite; }
+
+/* Badge strip */
+.badgeStrip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.badges { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.badgeIcon {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--primary-glow);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  padding: 4px 10px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.emptyBadges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.chevron { color: var(--text-muted); }
+
+/* Coin rain */
+.coinRain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 20;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 480px) {
+  .content { padding: 16px; }
+  .amount { font-size: 2.2rem; }
+}

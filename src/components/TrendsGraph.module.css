@@ -1,0 +1,81 @@
+.vaultPanel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-xl);
+  padding: clamp(20px, 2.5vw, 28px);
+  box-shadow: var(--shadow-vault);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  transition: all var(--dur-base) var(--ease-vault);
+}
+
+.vaultPanel:hover {
+  border-color: var(--border-primary);
+  box-shadow: var(--shadow-vault), 0 0 32px var(--primary-glow);
+  transform: translateY(-2px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleInfo { display: flex; flex-direction: column; gap: 3px; }
+.title  { font-size: 0.95rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; }
+.sub    { font-size: 0.65rem; font-weight: 700; color: var(--text-muted);    text-transform: uppercase; letter-spacing: 0.08em; }
+.pulseIcon { color: var(--primary); opacity: 0.7; }
+
+.chartWrap { height: 240px; }
+
+/* Tooltip */
+.tt {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-primary);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ttLabel { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+.ttRow   { display: flex; align-items: center; gap: 8px; }
+.ttDot   { width: 7px; height: 7px; border-radius: 50%; background: var(--primary); }
+.ttValue { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: var(--text-primary); }
+.ttSub   { font-size: 0.6rem; color: var(--primary); opacity: 0.6; }
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.totalBadge  { display: flex; flex-direction: column; gap: 2px; }
+.badgeLabel  { font-size: 0.6rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.badgeVal    { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; color: var(--text-primary); }
+
+.trendArrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 5px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+@media (max-width: 480px) {
+  .vaultPanel { padding: 16px; }
+  .chartWrap { height: 200px; }
+}

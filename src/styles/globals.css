@@ -1,0 +1,344 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* ════════════════════════════════════════════
+   Reset & Base
+   ════════════════════════════════════════════ */
+@theme {
+  --color-primary: var(--primary);
+  --color-accent:  var(--accent);
+  --color-danger:  var(--danger);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  transition: background var(--dur-slow) var(--ease-vault),
+              color var(--dur-slow) var(--ease-vault);
+}
+
+/* ════════════════════════════════════════════
+   Vault Grid Background
+   ════════════════════════════════════════════ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(var(--vault-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--vault-grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ════════════════════════════════════════════
+   Scan Line (Dark Only)
+   ════════════════════════════════════════════ */
+.scan-line {
+  position: fixed;
+  top: -120px;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, rgba(var(--primary-rgb), 0.06), transparent);
+  z-index: 999;
+  pointer-events: none;
+  animation: scanDown 10s linear infinite;
+}
+[data-theme='light'] .scan-line { display: none; }
+
+@keyframes scanDown {
+  from { transform: translateY(0); }
+  to   { transform: translateY(calc(100vh + 120px)); }
+}
+
+/* ════════════════════════════════════════════
+   Typography
+   ════════════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  font-size: 0.75em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ════════════════════════════════════════════
+   Glass / Clay Cards
+   ════════════════════════════════════════════ */
+.vault-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-vault);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--dur-base), box-shadow var(--dur-base), transform var(--dur-base);
+}
+
+.vault-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-card-top);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.vault-card > * { position: relative; z-index: 1; }
+
+.vault-card:hover {
+  border-color: var(--border-primary);
+  box-shadow: var(--shadow-vault), 0 0 32px var(--primary-glow);
+  transform: translateY(-3px);
+}
+
+/* ════════════════════════════════════════════
+   Buttons
+   ════════════════════════════════════════════ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--gradient-primary);
+  color: #000;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: all var(--dur-base) var(--ease-spring);
+  box-shadow: 0 4px 20px var(--primary-glow);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  opacity: 0;
+  transition: opacity var(--dur-fast);
+}
+
+.btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 32px var(--primary-glow); }
+.btn-primary:hover::after { opacity: 1; }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-full);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all var(--dur-base);
+  white-space: nowrap;
+}
+
+.btn-ghost:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-glow); }
+
+/* ════════════════════════════════════════════
+   Input Styles
+   ════════════════════════════════════════════ */
+.vault-input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.vault-input::placeholder { color: var(--text-muted); }
+.vault-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+
+/* ════════════════════════════════════════════
+   Custom Cursor (Desktop Only)
+   ════════════════════════════════════════════ */
+.cursor-dot {
+  position: fixed;
+  width: 6px; height: 6px;
+  background: var(--primary);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s linear;
+}
+
+.cursor-follower {
+  position: fixed;
+  width: 28px; height: 28px;
+  border: 1.5px solid var(--primary);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s ease-out, width 0.2s, height 0.2s, border-color 0.2s;
+  opacity: 0.7;
+}
+
+@media (max-width: 1024px) {
+  .cursor-dot, .cursor-follower { display: none; }
+}
+
+/* ════════════════════════════════════════════
+   Utility Animation Classes
+   ════════════════════════════════════════════ */
+.coin {
+  position: absolute;
+  width: 18px; height: 18px;
+  background: var(--gradient-gold);
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(255,215,0,0.5);
+  z-index: 50;
+}
+
+/* Pulse ring (status indicator) */
+@keyframes pulseRing {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.pulse-dot {
+  position: relative;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: pulseRing 1.8s ease-out infinite;
+}
+
+/* Wave text */
+.wave-text span {
+  display: inline-block;
+  animation: wave 1.6s ease-in-out infinite;
+  animation-delay: calc(0.08s * var(--i));
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-7px); }
+}
+
+/* Spin */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spin { animation: spin 0.9s linear infinite; }
+
+/* Slide-in from bottom */
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Glow pulse */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 12px var(--primary-glow); }
+  50%       { box-shadow: 0 0 28px var(--primary-glow), 0 0 48px var(--primary-glow); }
+}
+
+/* Horizontal scan line on cards */
+@keyframes scanH {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%);  }
+}
+
+/* ════════════════════════════════════════════
+   Scroll-triggered text reveal
+   ════════════════════════════════════════════ */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+/* Glassmorphism / Neumorphism enhancement */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-vault), inset 0 1px 0 rgba(255,255,255,0.03);
+  transition: all var(--dur-base) var(--ease-vault);
+}
+.glass-card:hover {
+  border-color: var(--border-primary);
+  box-shadow: var(--shadow-vault), 0 0 40px var(--primary-glow), inset 0 1px 0 rgba(255,255,255,0.05);
+  transform: translateY(-2px);
+}
+
+/* Morphism button hover */
+.btn-morph {
+  transition: all var(--dur-base) var(--ease-spring);
+}
+.btn-morph:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 32px var(--primary-glow);
+}
+.btn-morph:active {
+  transform: translateY(0) scale(0.98);
+}
